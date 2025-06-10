@@ -17,7 +17,7 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await fetch("/chat", {
+      const res = await fetch("https://server-app-mg66b.ondigitalocean.app/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: updatedMessages }),
