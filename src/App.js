@@ -107,9 +107,6 @@
 //
 // export default App;
 
-
-//
-
 import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import "./App.css";
@@ -150,9 +147,11 @@ function App() {
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
+        console.log("Chunk received:", chunk); // ✅ 调试日志
         fullReply += chunk;
 
         setMessages(prev => {
+          if (prev.length === 0) return prev;
           const lastMsg = prev[prev.length - 1];
           if (lastMsg.role === "assistant") {
             const updatedLast = { ...lastMsg, content: fullReply };
