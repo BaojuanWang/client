@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VulnLearn</title>
+<title>Learn with ChatGPT</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
 
@@ -15,7 +15,6 @@
   --text: #1a1916;
   --muted: #7a7870;
   --accent: #2d5be3;
-  --accent-l: #eef1fd;
   --mono: 'IBM Plex Mono', monospace;
   --sans: 'IBM Plex Sans', sans-serif;
 }
@@ -49,7 +48,38 @@ body {
   letter-spacing: -0.3px;
 }
 
-/* CHAT */
+/* LAYOUT */
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* LEFT SIDEBAR — empty */
+.sidebar-left {
+  width: 186px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+
+/* RIGHT SIDEBAR — empty */
+.sidebar-right {
+  width: 186px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+}
+
+/* CHAT WRAPPER */
+.chat-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* CHAT MESSAGES */
 .chat-messages {
   flex: 1;
   overflow-y: auto;
@@ -162,7 +192,7 @@ body {
 .sbtn:hover:not(:disabled) { background: #1e4bc4; }
 .sbtn:disabled { background: #aab8f0; cursor: not-allowed; }
 
-/* MARKDOWN CONTENT */
+/* MARKDOWN */
 .ma-bubble p { margin-bottom: 6px; }
 .ma-bubble p:last-child { margin-bottom: 0; }
 .ma-bubble code {
@@ -205,17 +235,26 @@ body {
 <body>
 
 <div class="topbar">
-  <span class="logo">VulnLearn</span>
+  <span class="logo">Learn with ChatGPT</span>
 </div>
 
-<div class="chat-messages" id="msgs"></div>
+<div class="layout">
 
-<div class="input-area">
-  <div class="input-row">
-    <textarea class="cinput" id="cin" placeholder="Ask about a vulnerability..." rows="1"
-      oninput="ar(this)" onkeydown="handleKey(event)"></textarea>
-    <button class="sbtn" id="sbtn" onclick="send()">Send</button>
+  <div class="sidebar-left"></div>
+
+  <div class="chat-wrapper">
+    <div class="chat-messages" id="msgs"></div>
+    <div class="input-area">
+      <div class="input-row">
+        <textarea class="cinput" id="cin" placeholder="Ask about a vulnerability..." rows="1"
+          oninput="ar(this)" onkeydown="handleKey(event)"></textarea>
+        <button class="sbtn" id="sbtn" onclick="send()">Send</button>
+      </div>
+    </div>
   </div>
+
+  <div class="sidebar-right"></div>
+
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
