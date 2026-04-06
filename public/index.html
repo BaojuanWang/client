@@ -218,10 +218,9 @@ body {
   </div>
 </div>
 
-<!-- marked.js for Markdown rendering -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <script>
-var history = [];
+var chatHistory = [];
 var busy = false;
 
 function $(id){ return document.getElementById(id); }
@@ -257,7 +256,7 @@ function send(){
   inp.value = '';
   inp.style.height = 'auto';
   appendUser(text);
-  history.push({ role: 'user', content: text });
+  chatHistory.push({ role: 'user', content: text });
   setBusy(true);
 
   var thinkEl = appendThink();
@@ -269,21 +268,21 @@ function send(){
   fetch('https://vuln-tool-server-itgi3.ondigitalocean.app/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: history })
+    body: JSON.stringify({ messages: chatHistory })
   })
   .then(function(r){ return r.json(); })
   .then(function(data){
     clearTimeout(busyTimer);
     thinkEl.remove();
     var reply = data.reply || '';
-    history.push({ role: 'assistant', content: reply });
+    chatHistory.push({ role: 'assistant', content: reply });
     appendAssistant(reply);
   })
   .catch(function(e){
     clearTimeout(busyTimer);
     thinkEl.remove();
     appendErr('Network error: ' + e.message);
-    history.pop();
+    chatHistory.pop();
   })
   .finally(function(){ setBusy(false); });
 }
@@ -329,7 +328,6 @@ function esc(s){
     .replace(/>/g,'&gt;');
 }
 
-// Warn before leaving
 window.addEventListener('beforeunload', function(e){
   e.preventDefault();
   e.returnValue = '';
